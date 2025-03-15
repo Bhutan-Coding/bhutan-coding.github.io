@@ -1,4 +1,4 @@
-// Video sharing (v2.4.2) by pooiod7
+// Video sharing (v2.5.2) by pooiod7
 // Was originally the "ScreenSharing" extension
 
 (function(Scratch) {
@@ -11,7 +11,7 @@
   const runtime = Scratch.vm.runtime;
   const renderer = runtime.renderer;
   const Cast = Scratch.Cast;
-  
+
   var createdSkins = [];
 
   const videoElement = document.createElement('video');
@@ -20,8 +20,100 @@
   let mediaStream = null;
 
   let haswarned;
-  function shouldwarn(){
+
+  function shouldwarn() {
     return !Scratch.vm.runtime.isPackaged;
+  }
+
+  function MakeWidget(html, pageTitle, width, height) {
+    var accent = "#e01f1f";
+
+    function getTheme() {
+      try {
+        accent = "#e01f1f";
+        var themeSetting = localStorage.getItem('tw:theme');
+        var parsed = JSON.parse(themeSetting);
+        if (parsed.accent === 'purple') {
+          accent = '#855cd6';
+        } else if (parsed.accent === 'blue') {
+          accent = '#4c97ff';
+        }
+      } catch (err) {
+        err = err;
+      }
+
+      if (document.querySelector("#app > div > div > div > div.gui_menu-bar-position_3U1T0.menu-bar_menu-bar_JcuHF.box_box_2jjDp")) {
+        var accent2 = window.getComputedStyle(document.querySelector("#app > div > div > div > div.gui_menu-bar-position_3U1T0.menu-bar_menu-bar_JcuHF.box_box_2jjDp")).backgroundColor;
+        if (accent2 && accent != "transparent") {
+          accent = accent2;
+        }
+      }
+    }
+    getTheme();
+
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = accent;
+    overlay.style.zIndex = '9999';
+    overlay.id = "widgetoverlay";
+
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'absolute';
+    wrapper.style.top = "50%";
+    wrapper.style.left = "50%";
+    wrapper.style.transform = 'translate(-50%, -50%)';
+    wrapper.style.border = '4px solid rgba(255, 255, 255, 0.25)';
+    wrapper.style.borderRadius = '13px';
+    wrapper.style.padding = '0px';
+    wrapper.style.width = width || '70vw';
+    wrapper.style.height = height || '80vh';
+
+    const modal = document.createElement('div');
+    modal.style.padding = '0px';
+    modal.style.borderRadius = '10px';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.textAlign = 'center';
+
+    wrapper.appendChild(modal);
+
+    const title = document.createElement('div');
+    title.style.position = 'absolute';
+    title.style.top = '0';
+    title.style.left = '0';
+    title.style.width = '100%';
+    title.style.height = '50px';
+    title.style.backgroundColor = accent;
+    title.style.display = 'flex';
+    title.style.justifyContent = 'center';
+    title.style.alignItems = 'center';
+    title.style.color = 'white';
+    title.style.fontSize = '24px';
+    title.style.borderTopLeftRadius = '10px';
+    title.style.borderTopRightRadius = '10px';
+    title.id = "WidgetTitle";
+    title.innerHTML = pageTitle || "Widget";
+
+    const widgetframe = document.createElement('div');
+    widgetframe.style.width = '100%';
+    widgetframe.style.height = `calc(100% - 50px)`;
+    widgetframe.style.marginTop = '50px';
+    widgetframe.style.border = 'none';
+    widgetframe.id = "Widgetframe";
+    widgetframe.name = 'Widgetframe';
+    widgetframe.style.borderBottomLeftRadius = '10px';
+    widgetframe.style.borderBottomRightRadius = '10px';
+    widgetframe.style.backgroundColor = 'var(--ui-primary, white)';
+    widgetframe.innerHTML = html;
+    modal.appendChild(widgetframe);
+
+    modal.appendChild(title);
+    overlay.appendChild(wrapper);
+    document.body.appendChild(overlay);
   }
 
   class VideoSharing {
@@ -31,8 +123,7 @@
         name: 'Video Sharing',
         color1: '#00a1ff',
         color2: '#006bff',
-        blocks: [
-          {
+        blocks: [{
             opcode: 'startScreenSharing',
             blockType: Scratch.BlockType.COMMAND,
             text: 'Start screen sharing',
@@ -80,7 +171,7 @@
               },
               QUALITY: {
                 type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 0.7, 
+                defaultValue: 0.7,
               },
             },
           },
@@ -95,7 +186,7 @@
               },
               QUALITY: {
                 type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 0.7, 
+                defaultValue: 0.7,
               },
             },
           },
@@ -129,84 +220,98 @@
       };
     }
 
-    async _createURLSkin(URL) {
-      let imageData;
-      if (await Scratch.canFetch(URL)) {
-        imageData = await Scratch.fetch(URL);
-      } else {
-        return;
-      }
-
-      const contentType = imageData.headers.get("Content-Type");
-      if (
-        contentType === "image/png" ||
-        contentType === "image/jpeg" ||
-        contentType === "image/bmp" ||
-        contentType === "image/webp"
-      ) {
-        // eslint-disable-next-line no-restricted-syntax
-        const output = new Image();
-        output.src = URL;
-        output.crossOrigin = "anonymous";
-        await output.decode();
-        return renderer.createBitmapSkin(output);
-      }
-    }
-
-    _refreshTargetsFromID(skinId, reset, newId) {
-      const drawables = renderer._allDrawables;
-      const skins = renderer._allSkins;
-
-      for (const target of runtime.targets) {
-        const drawableID = target.drawableID;
-        const targetSkin = drawables[drawableID].skin.id;
-
-        if (targetSkin === skinId) {
-          target.updateAllDrawableProperties();
-          if (!reset)
-            drawables[drawableID].skin = newId ? skins[newId] : skins[skinId];
-        }
-      }
-    }
-
-    async showimage(args, util) {
-      const name = "vidshareskin";
-      const skinName = `lms-${Cast.toString(name)}`;
-      const url = Cast.toString(args.URL);
-
-      let oldSkinId = null;
-      if (createdSkins[skinName]) {
-        oldSkinId = createdSkins[skinName];
-      }
-
-      const skinId = await this._createURLSkin(url);
-      if (!skinId) return;
-      createdSkins[skinName] = skinId;
-
-      if (oldSkinId) {
-        this._refreshTargetsFromID(oldSkinId, false, skinId);
-        renderer.destroySkin(oldSkinId);
-      }
-
-      this.setSkin({NAME:name}, util)
-    }
-
-    setSkin(args, util) {
-      const skinName = `lms-${Cast.toString(args.NAME)}`;
-      if (!createdSkins[skinName]) return;
-
-      const targetName = Cast.toString(args.TARGET);
-      const target = util.target;
+    async showimage({
+      URL
+    }, util) {
+      const target = util.target || util;
       if (!target) return;
+
+      if (!URL) {
+        this.restoreSkin({}, util);
+      }
+
+      var skins = renderer._allSkins;
+      var drawables = renderer._allDrawables;
+
       const drawableID = target.drawableID;
 
-      const skinId = createdSkins[skinName];
-      renderer._allDrawables[drawableID].skin = renderer._allSkins[skinId];
+      var removeSkin = false;
+
+      if (!URL.startsWith("data:")) {
+        async function imageToDataURI(url) {
+          try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            return new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.readAsDataURL(blob);
+            });
+          } catch (e) {
+            removeSkin = true;
+            return `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/ep7rVQAAAAASUVORK5CYII=`;
+          }
+        }
+
+        URL = await imageToDataURI(URL)
+      }
+
+      var doUpdate = skins[drawables[drawableID]._skin._id] && skins[drawables[drawableID]._skin._id].tmpSkin;
+
+      const image = new Image();
+      image.onload = () => {
+        var canvas = document.createElement("canvas");
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0);
+
+        if (removeSkin) {
+          if (doUpdate) {
+            if (
+              drawables[drawableID]._skin &&
+              skins[drawables[drawableID]._skin._id] &&
+              skins[drawables[drawableID]._skin._id].tmpSkin
+            ) {
+              renderer.destroySkin(drawables[drawableID]._skin._id);
+            }
+          }
+          target.updateAllDrawableProperties();
+        }
+
+        if (doUpdate) {
+          renderer.updateBitmapSkin(drawables[drawableID]._skin._id, canvas, 2);
+          renderer.updateDrawableSkinId(drawableID, drawables[drawableID]._skin._id);
+        } else {
+          const skinId = renderer.createBitmapSkin(canvas);
+          skins[skinId].tmpSkin = true;
+          renderer.updateDrawableSkinId(drawableID, skinId);
+        }
+
+        if (target.onTargetVisualChange) {
+          target.onTargetVisualChange();
+        }
+      };
+      image.src = Scratch.Cast.toString(URL);
     }
 
     restoreSkin(args, util) {
       const target = util.target;
       if (!target) return;
+      const drawableID = target.drawableID;
+
+      var skins = renderer._allSkins;
+      var drawables = renderer._allDrawables;
+
+      if (
+        drawables[drawableID]._skin &&
+        skins[drawables[drawableID]._skin._id] &&
+        skins[drawables[drawableID]._skin._id].tmpSkin
+      ) {
+        renderer.destroySkin(drawables[drawableID]._skin._id);
+      }
       target.updateAllDrawableProperties();
     }
 
@@ -217,7 +322,7 @@
         return false;
       }
     }
-    
+
     stopSharing() {
       if (mediaStream) {
         mediaStream.getTracks().forEach((track) => {
@@ -228,12 +333,37 @@
     }
 
     isSharing() {
-      return !!mediaStream && !!videoElement.srcObject;
+      return Scratch.Cast.toBoolean(mediaStream && videoElement.srcObject);
     }
 
-    warn(thing) {
+    async warn(thing) {
       if (haswarned != thing) {
-        if (window.confirm("Do you want to share your " + thing + "?")) {
+
+        if (document.getElementById("widgetoverlay")) {
+          return false;
+        }
+
+        window.resolve8932902095902;
+        var allow = new Promise((res, rej) => {
+          window.resolve8932902095902 = res;
+        });
+
+        MakeWidget(`<div class="security-manager-modal_body_Pn7qy box_box_2jjDp" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding-bottom: 25px;">
+            <div>
+              <p><span>
+                This project is is requesting access to your ${thing}.<br>Do you wish to allow this action?
+              </span></p>
+              <div class="load-extension_unsandboxed-warning_2iFhK"><span>
+                If you say yes, your choice will be remembered until a new project is loaded, or the project asks for something else.
+              </span></div>
+            </div>
+            <div class="security-manager-modal_buttons_1LSKA box_box_2jjDp">
+              <button class="security-manager-modal_deny-button_3Vd-R" onclick='document.getElementById("widgetoverlay").remove(); window.resolve8932902095902(false);'><span>Deny</span></button>
+              <button class="security-manager-modal_allow-button_3tcXk" onclick='document.getElementById("widgetoverlay").remove(); window.resolve8932902095902(true);'><span>Allow</span></button>
+            </div>
+          </div>`, "Extension Security", "500px", "259px");
+
+        if (await allow) {
           haswarned = thing;
           return true;
         } else {
@@ -244,23 +374,31 @@
       }
     }
 
-    startScreenSharing() {
-      if (this.isSharing()) this.stopSharing();
+    async startScreenSharing() {
+      if (this.isSharing()) {
+        this.stopSharing();
+      }
 
-      if (!this.canScreen()) return;
+      if (!this.canScreen()) {
+        return;
+      }
 
       if (shouldwarn()) {
-        if (!this.warn("screen")) return;
+        if (!await this.warn("screen")) {
+          return;
+        }
       }
-      
+
       return new Promise((resolve) => {
         navigator.mediaDevices
-          .getDisplayMedia({ video: true })
+          .getDisplayMedia({
+            video: true
+          })
           .then((stream) => {
-            mediaStream = stream; 
+            mediaStream = stream;
             videoElement.srcObject = stream;
             videoElement.play();
-            stream.getVideoTracks()[0].onended = function () {
+            stream.getVideoTracks()[0].onended = function() {
               stream.getTracks().forEach((track) => {
                 track.stop();
               });
@@ -276,21 +414,27 @@
       });
     }
 
-    startCameraSharing() {
-      if (this.isSharing()) this.stopSharing();
+    async startCameraSharing() {
+      if (this.isSharing()) {
+        this.stopSharing();
+      }
 
       if (shouldwarn()) {
-        if (!this.warn("camera")) return;
+        if (!await this.warn("camera")) {
+          return;
+        }
       }
-      
+
       return new Promise((resolve, reject) => {
         navigator.mediaDevices
-          .getUserMedia({ video: true })
+          .getUserMedia({
+            video: true
+          })
           .then((stream) => {
             mediaStream = stream;
             videoElement.srcObject = stream;
             videoElement.play();
-            stream.getVideoTracks()[0].onended = function () {
+            stream.getVideoTracks()[0].onended = function() {
               mediaStream.getTracks().forEach((track) => {
                 track.stop();
               });
@@ -316,10 +460,14 @@
     }
 
     getHEX(args) {
-      if (!this.isSharing()) return;
-      
+      if (!this.isSharing()) {
+        return;
+      }
+
       var rez = args.REZ;
-      if (rez > 1) rez = 1;
+      if (rez > 1) {
+        rez = 1;
+      }
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
       const width = videoElement.videoWidth * rez;
@@ -343,10 +491,14 @@
     }
 
     getPNG(args) {
-      if (!this.isSharing()) return;
-      
+      if (!this.isSharing()) {
+        return;
+      }
+
       var rez = args.REZ;
-      if (rez > 1) rez = 1;
+      if (rez > 1) {
+        rez = 1;
+      }
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
       const width = videoElement.videoWidth * rez;
@@ -362,10 +514,14 @@
     }
 
     getJPEG(args) {
-      if (!this.isSharing()) return;
-      
+      if (!this.isSharing()) {
+        return;
+      }
+
       let rez = args.REZ;
-      if (rez > 1) rez = 1;
+      if (rez > 1) {
+        rez = 1;
+      }
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
       const width = videoElement.videoWidth * rez;
@@ -382,10 +538,14 @@
     }
 
     getWEBP(args) {
-      if (!this.isSharing()) return;
-      
+      if (!this.isSharing()) {
+        return;
+      }
+
       let rez = args.REZ;
-      if (rez > 1) rez = 1;
+      if (rez > 1) {
+        rez = 1;
+      }
 
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
@@ -406,7 +566,7 @@
     getAspectRatio() {
       const width = videoElement.videoWidth;
       const height = videoElement.videoHeight;
-      return "["+width+", "+height+"]";
+      return "[" + width + ", " + height + "]";
     }
   }
 
