@@ -228,14 +228,7 @@ const Footer = () => (
                             id="si.scratch-forum-topic"
                         />
                     </a>
-                    <a href="https://www.snail-ide.com/forum">
-                        <FormattedMessage
-                            defaultMessage="Unoffical Forum"
-                            description="Link to the unoffical internet forum for Snail IDE"
-                            id="si.unofficial-forum"
-                        />
-                    </a>
-                    <a href="https://snail-ide.com">
+                    <a href="https://snailshare.vercel.app">
                         <FormattedMessage
                             defaultMessage="Homepage"
                             description="Link to homepage"
@@ -256,7 +249,7 @@ class Interface extends React.Component {
             loginData: {}
         }
         window.addEventListener('message', (event) => {
-            if (event.origin !== 'https://www.snail-ide.com') return;
+            if (event.origin !== 'https://snailshare.vercel.app/') return;
                this.setState({ loginData: event.data });
                console.log(event.data);
             }
@@ -301,7 +294,7 @@ class Interface extends React.Component {
                 <iframe
                     id='login'
                     style={{ display: 'none' }}
-                    src={`https://www.snail-ide.com/embed/editor?external=${window.location}`}
+                    src={`https://snailshare.vercel.app/embed/editor?external=${window.location}`}
                 ></iframe>
                 {isHomepage ? (
                     <div className={styles.menu}>
@@ -362,8 +355,8 @@ class Interface extends React.Component {
                             {(window.LastFetchedProject) != null && (window.LastFetchedProject.remix != null) ? (
                                 <div className={styles.unsharedUpdate}>
                                     <div style={{ display: "flex", flexDirection: "row" }}>
-                                        <a style={{ height: "32px" }} target="_blank" href={"https://snail-ide.com/profile?user=" + projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}><img style={{ marginRight: "4px", borderRadius: "4px" }} width="32" height="32" title={projectDetailCache[String(window.LastFetchedProject.remix)]?.owner} alt={projectDetailCache[String(window.LastFetchedProject.remix)]?.owner} src={"https://snailshare.dreamhosters.com/api/pmWrapper/scratchUserImage?username=" + projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}></img></a>
-                                        <p>Thanks to <b><a target="_blank" href={"https://snail-ide.com/profile?user=" + projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}>{projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}</a></b> for the original project <b><a href={window.location.origin + "/#" + projectDetailCache[String(window.LastFetchedProject.remix)]?.id}>{projectDetailCache[String(window.LastFetchedProject.remix)]?.name}</a></b>.</p>
+                                        <a style={{ height: "32px" }} target="_blank" href={"https://snailshare.vercel.app/profile?user=" + projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}><img style={{ marginRight: "4px", borderRadius: "4px" }} width="32" height="32" title={projectDetailCache[String(window.LastFetchedProject.remix)]?.owner} alt={projectDetailCache[String(window.LastFetchedProject.remix)]?.owner} src={"https://snailshare.dreamhosters.com/api/pmWrapper/scratchUserImage?username=" + projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}></img></a>
+                                        <p>Thanks to <b><a target="_blank" href={"https://snailshare.vercel.app/profile?user=" + projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}>{projectDetailCache[String(window.LastFetchedProject.remix)]?.owner}</a></b> for the original project <b><a href={window.location.origin + "/#" + projectDetailCache[String(window.LastFetchedProject.remix)]?.id}>{projectDetailCache[String(window.LastFetchedProject.remix)]?.name}</a></b>.</p>
                                     </div>
                                     <div style={{ display: 'none' }}>{getProjectDetailsById(window.LastFetchedProject.remix).yesIDefinetlyKnowHowToUseReactProperlyShutUp}</div>
                                 </div>
@@ -410,7 +403,7 @@ class Interface extends React.Component {
                                 </div>
                             ) : null}
                             {((window.LastFetchedProject) != null) ? (
-                                <a target="_blank" href={"https://snail-ide.com/profile?user=" + window.LastFetchedProject.owner}>View other projects by {window.LastFetchedProject.owner}</a>
+                                <a target="_blank" href={"https://snailshare.vercel.app/profile?user=" + window.LastFetchedProject.owner}>View other projects by {window.LastFetchedProject.owner}</a>
                             ) : null}
                             <div className={styles.section}>
                                 <p>
@@ -428,7 +421,7 @@ class Interface extends React.Component {
                                         <a
                                             target="_blank"
                                             rel="noreferrer"
-                                            href={`https://snail-ide.com/report?type=project&id=${projectId}`}
+                                            href={`https://snailshare.vercel.app/report?type=project&id=${projectId}`}
                                             className={styles.reportLink}
                                         >
                                             <img
@@ -446,7 +439,7 @@ class Interface extends React.Component {
                             <div className={styles.section}>
                                 <FeaturedProjects />
                             </div>
-                            <a target="_blank" href="https://snail-ide.com/search?q=all:projects">View projects in new tab</a>
+                            <a target="_blank" href="https://snailshare.vercel.app/search?q=all:projects">View projects in new tab</a>
                         </React.Fragment>
                     ) : null}
                 </div>

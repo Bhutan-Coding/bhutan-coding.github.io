@@ -438,7 +438,7 @@ class MenuBar extends React.Component {
             >
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
-                        <a href="https://www.snail-ide.com" target="_blank">
+                        <a href="https://snailshare.vercel.app/" target="_blank">
                             <div className={classNames(styles.menuBarItem, styles.hoverable)}>
                                 <img
                                     alt="Snail IDE"
@@ -896,7 +896,7 @@ class MenuBar extends React.Component {
                         <TWSaveStatus />
                     </div>
 
-                    <a href={this.props.username ? `https://www.snail-ide.com/profile?user=${this.props.username}` : `https://www.snail-ide.com/sign-in`}>
+                    <a href={this.props.username ? `https://snailshare.vercel.app/profile?user=${this.props.username}` : `https://snailshare.vercel.app/sign-in`}>
                         <div className={classNames(styles.menuBarItem, styles.hoverable)}>
                             {this.props.username ? this.props.username : 'Sign in/Join'}
                         </div>
