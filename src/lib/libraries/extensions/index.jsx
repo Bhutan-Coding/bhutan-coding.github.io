@@ -205,7 +205,7 @@ const menuItems = [
     },
     {
         name: 'Lazy Collisions',
-        extensionId: 'https://editor.snail-ide.com/Lazy-Collisions.js',
+        extensionId: 'https://snail-ide.js.org/Lazy-Collisions.js',
         iconURL: 'https://sharkpools-extensions.vercel.app/extension-thumbs/Lazy-Collisions.svg',
         collaborator: 'SharkPool',
         tags: ['penguinmod'],
@@ -232,7 +232,7 @@ const menuItems = [
     },
     {
         name: 'VideoSharing',
-        extensionId: 'https://editor.snail-ide.com/VideoSharing.js',
+        extensionId: 'https://snail-ide.js.org/VideoSharing.js',
         iconURL: VideoSharing,
         tags: ['penguinmod'],
         description: 'Share your screen and camera.',
@@ -241,8 +241,8 @@ const menuItems = [
     },
     {
         name: 'Prompts',
-        extensionId: 'https://editor.snail-ide.com/Prompts.js',
-        iconURL: 'https://editor.snail-ide.com/Prompts.png',
+        extensionId: 'https://snail-ide.js.org/Prompts.js',
+        iconURL: 'https://snail-ide.js.org/Prompts.png',
         collaborator: 'LoganCreatez',
         tags: ['penguinmod', 'ai'],
         description: 'Good prompts for PenguinGPT',
@@ -250,8 +250,8 @@ const menuItems = [
     },
     {
         name: 'SnailShare API',
-        extensionId: 'https://editor.snail-ide.com/api.js',
-        iconURL: 'https://editor.snail-ide.com/snailideapiext.png',
+        extensionId: 'https://snail-ide.js.org/api.js',
+        iconURL: 'https://snail-ide.js.org/snailideapiext.png',
         snailExt: true,
         collaborator: 'BA4X',
         tags: ['penguinmod'],
@@ -345,9 +345,9 @@ const menuItems = [
     },
     {
         name: 'Random Utils',
-        extensionId: 'https://editor.snail-ide.com/random_utils.js',
+        extensionId: 'https://snail-ide.js.org/random_utils.js',
         snailExt: true,
-        iconURL: 'https://editor.snail-ide.com/random.png',
+        iconURL: 'https://snail-ide.js.org/random.png',
         tags: ['penguinmod'],
         description: "Random utilites that you may or may not use.",
         featured: true
@@ -362,7 +362,7 @@ const menuItems = [
     },
     {
         name: 'Save Data',
-        extensionId: 'https://editor.snail-ide.com/save.js',
+        extensionId: 'https://snail-ide.js.org/save.js',
         collaborator: 'Mr_rudy',
         iconURL: snailSaveIcon,
         tags: ['penguinmod'],
@@ -371,9 +371,9 @@ const menuItems = [
     },
     {
         name: 'Grayscale',
-        extensionId: 'https://editor.snail-ide.com/grayscale.js',
+        extensionId: 'https://snail-ide.js.org/grayscale.js',
         collaborator: 'Mr_rudy',
-        iconURL: 'https://editor.snail-ide.com/grayscale.svg',
+        iconURL: 'https://snail-ide.js.org/grayscale.svg',
         tags: ['penguinmod'],
         description: "Toggle a dramatic grayscale effect on your project. ",
         featured: true
@@ -390,7 +390,7 @@ const menuItems = [
     },
     {
         name: 'Randomly Blocks',
-        extensionId: 'https://editor.snail-ide.com/randomlyBlocks.js',
+        extensionId: 'https://snail-ide.js.org/randomlyBlocks.js',
         collaborator: 'mariocraft987',
         iconURL: randomlyBlocksIcon,
         tags: ['other_mods'],
@@ -531,7 +531,7 @@ const menuItems = [
     },
     {
         name: 'Cloud Storage',
-        extensionId: 'https://editor.snail-ide.com/cloudstorage.js',
+        extensionId: 'https://snail-ide.js.org/cloudstorage.js',
         collaborator: 'pooiod7',
         iconURL: cloudstorageIconURL,
         tags: ['penguinmod'],
@@ -540,7 +540,7 @@ const menuItems = [
     },
     {
         name: 'SuperStorage',
-        extensionId: 'https://editor.snail-ide.com/SuperStorage.js',
+        extensionId: 'https://snail-ide.js.org/SuperStorage.js',
         iconURL: SuperStorage,
         tags: ['penguinmod'],
         description: 'Store and retrieve data locally on device or remotely on a server.',
@@ -1078,8 +1078,8 @@ const menuItems = [
     },
     {
         name: 'Time Utils',
-        extensionId: 'https://editor.snail-ide.com/Time_Utilities.js',
-        iconURL: 'https://editor.snail-ide.com/time.svg',
+        extensionId: 'https://snail-ide.js.org/Time_Utilities.js',
+        iconURL: 'https://snail-ide.js.org/time.svg',
         collaborator: 'GingerNinjaStickdudeWorld',
         tags: ['penguinmod'],
         description: "Simple blocks to handle time.",
@@ -1186,7 +1186,7 @@ const menuItems = [
     {
         name: 'ISS',
         snailExt: true,
-        extensionId: 'https://editor.snail-ide.com/iss.js',
+        extensionId: 'https://snail-ide.js.org/iss.js',
         iconURL: issIcon,
         tags: ['penguinmod'],
         description: 'Get the latitude and longitude of the International Space Station',
@@ -1194,7 +1194,7 @@ const menuItems = [
     },
     {
         name: 'Browser & OS Information',
-        extensionId: 'https://editor.snail-ide.com/browserandosinfo.js',
+        extensionId: 'https://snail-ide.js.org/browserandosinfo.js',
         iconURL: browserAndOSInfoIcon,
         tags: ['penguinmod'],
         collaborator: 'redspacecat',
@@ -1203,7 +1203,7 @@ const menuItems = [
     },
     {
         name: 'URL Information',
-        extensionId: 'https://editor.snail-ide.com/urlinfo.js',
+        extensionId: 'https://snail-ide.js.org/urlinfo.js',
         iconURL: URLInfoIcon,
         tags: ['penguinmod'],
         collaborator: 'redspacecat',
@@ -1413,7 +1413,7 @@ if (IsLocal || IsLiveTests) {
     const extras = [
         {
             name: 'CloudLink Ω',
-            extensionId: 'https://editor.snail-ide.com/clomega.js',
+            extensionId: 'https://snail-ide.js.org/clomega.js',
             tags: ['penguinmod', 'turbowarp'],
             iconURL: clomegaIcon,
             description: 'Register and login to accounts via Cloud Link 5 (WIP Extension!!!)',
@@ -1423,7 +1423,7 @@ if (IsLocal || IsLiveTests) {
         },
         {
             name: 'CloudLink 5',
-            extensionId: 'https://editor.snail-ide.com/cl5.js',
+            extensionId: 'https://snail-ide.js.org/cl5.js',
             tags: ['penguinmod', 'turbowarp'],
             insetIconURL: cloudlinkIcon,
             iconURL: clfiveIcon,
@@ -1509,7 +1509,7 @@ if (IsLocal || IsLiveTests) {
         },
         {
             name: 'Snail Extras',
-            extensionId: 'https://editor.snail-ide.com/snail_extras.js', // update reference once file names are updated
+            extensionId: 'https://snail-ide.js.org/snail_extras.js', // update reference once file names are updated
             tags: ['penguinmod'],
             iconURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-RWnel-yFH8B7obNf21l-F1DpJ7eCVd2oq2SeHm89Xw&s',
             insetIconURL: turbowarpIcon,
@@ -1543,7 +1543,7 @@ if (IsLocal || IsLiveTests) {
         },
         {
             name: 'Wacky Joke Blocks',
-            extensionId: 'https://editor.snail-ide.com/joke.js',
+            extensionId: 'https://snail-ide.js.org/joke.js',
             collaborator: 'Mr_rudy/nmsderp',
             iconURL: 'https://c8.alamy.com/comp/RB1P6W/young-handsome-business-man-laughing-of-you-pointing-to-the-camera-with-finger-hand-over-chest-shame-expression-RB1P6W.jpg',
             tags: ['penguinmod'],
@@ -1561,9 +1561,9 @@ if (IsLocal || IsLiveTests) {
         },
         {
             name: 'p5.js',
-            extensionId: 'https://editor.snail-ide.com/p5.js',
+            extensionId: 'https://snail-ide.js.org/p5.js',
             collaborator: 'Mr_rudy/nmsderp',
-            iconURL: 'https://editor.snail-ide.com/p5js.png',
+            iconURL: 'https://snail-ide.js.org/p5js.png',
             tags: ['penguinmod'],
             description: 'A more powerful alternative to the Pen extension.',
             featured: true,
@@ -1601,9 +1601,9 @@ if (IsLocal || IsLiveTests) {
         
     {
         name: 'Discord Auth',
-        extensionId: 'https://editor.snail-ide.com/discord.js',
+        extensionId: 'https://snail-ide.js.org/discord.js',
         snailExt: true,
-        iconURL: 'https://editor.snail-ide.com/discord-png.png',
+        iconURL: 'https://snail-ide.js.org/discord-png.png',
         tags: ['penguinmod'],
         description: "Get data from a Discord user!",
         featured: true
